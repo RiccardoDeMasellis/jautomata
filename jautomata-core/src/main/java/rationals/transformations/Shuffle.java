@@ -27,7 +27,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * This class implements the shuffle operator between two automatas.
+ * This class implements the shuffle formula.operator between two automatas.
  * <ul>
  * <li>C = A shuffle B</li>
  * <li>S(C) = { (a,b) | a in S(A) and b in S(B) }</li>
@@ -36,7 +36,7 @@ import java.util.Set;
  * <li>D(C) = { ((s1a,s1b),a,(s2a,s2b)) | exists (s1a,a,s2a) in D(A) or exists
  * (s1b,a,s2b) in D(b) }</li>
  * </ul>
- * This class uses the Mix operator with an empty alphabet to compute the
+ * This class uses the Mix formula.operator with an empty alphabet to compute the
  * Shuffle.
  * 
  * @author Arnaud Bailly

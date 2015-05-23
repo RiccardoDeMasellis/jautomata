@@ -21,7 +21,7 @@ import rationals.*;
 import java.util.*;
 
 /**
- * This class implements the mix - ie: synchronization product - operator
+ * This class implements the mix - ie: synchronization product - formula.operator
  * between two automatas.
  * <ul>
  * <li>C = A mix B</li>
