@@ -51,78 +51,64 @@ import java.util.*;
  */
 public class Automaton<L, Tr extends Transition<L>, T extends Builder<L, Tr, T>>
 		implements Acceptor<L>, StateMachine<L>, Rational<L>, Cloneable {
-	/* the identification of this automaton */
-	private Object id;
-
 	protected Builder<L, Tr, T> builder;
-
-	/**
-	 * @return Returns the id.
-	 */
-	public Object getId() {
-		return id;
-	}
-
-	/**
-	 * @param id
-	 *            The id to set.
-	 */
-	public void setId(Object id) {
-		this.id = id;
-	}
-
 	// The set of all objects which are labels of
 	// transitions of this automaton.
 	protected Set<L> alphabet;
-
+	/* the identification of this automaton */
+	private Object id;
 	// The set of all states of this automaton.
 	private Set<State> states;
-
 	// the set of initial states
 	private Set<State> initials;
-
 	// the set of terminal states
 	private Set<State> terminals;
-
 	// Allows access to transitions of this automaton
 	// starting from a given state and labelled by
 	// a given object. The keys of this map are instances
 	// of class Key and
 	// values are sets of transitions.
 	private Map<Key, Set<Transition<L>>> transitions;
-
 	// Allows access to transitions of this automaton
 	// arriving to a given state and labelled by
 	// a given object. The keys of this map are instances
 	// of class Key and
 	// values are sets of transitions.
 	private Map<Key, Set<Transition<L>>> reverse;
-
 	// bonte
 	private StateFactory stateFactory = new DefaultStateFactory(this);
-
     private StateLabels stateLabels = new StateLabels();
-    
+
 	/**
-	 * @return
+	 * Creates a new empty automaton which contains no state and no transition.
+	 * An empty automaton recognizes the empty language.
 	 */
-	public StateFactory getStateFactory() {
-		return this.stateFactory;
+	public Automaton() {
+		this(null);
 	}
 
 	/**
-	 * @param factory
+	 * Create a new empty automaton with given state factory.
+	 *
+	 * @param sf
+	 *            the StateFactory object to use for creating new states. May be
+	 *            null.
 	 */
-	public void setStateFactory(StateFactory factory) {
-		this.stateFactory = factory;
-		factory.setAutomaton(this);
+	public Automaton(StateFactory sf) {
+		this.stateFactory = sf == null ? new DefaultStateFactory(this) : sf;
+		alphabet = new HashSet<>();
+		states = stateFactory.stateSet();
+		initials = stateFactory.stateSet();
+		terminals = stateFactory.stateSet();
+		transitions = new HashMap<>();
+		reverse = new HashMap<>();
 	}
 
 	/**
 	 * Returns an automaton which recognizes the regular language associated
 	 * with the regular expression <em>@</em>, where <em>@</em> denotes the
 	 * empty word.
-	 * 
+	 *
 	 * @return an automaton which recognizes <em>@</em>
 	 */
 	public static <L, Tr extends Transition<L>, T extends Builder<L, Tr, T>> Automaton<L, Tr, T> epsilonAutomaton() {
@@ -135,7 +121,7 @@ public class Automaton<L, Tr extends Transition<L>, T extends Builder<L, Tr, T>>
 	 * Returns an automaton which recognizes the regular language associated
 	 * with the regular expression <em>l</em>, where <em>l</em> is a given
 	 * label.
-	 * 
+	 *
 	 * @param label
 	 *            any object that will be used as a label.
 	 * @return an automaton which recognizes <em>label</em>
@@ -154,7 +140,7 @@ public class Automaton<L, Tr extends Transition<L>, T extends Builder<L, Tr, T>>
 	/**
 	 * Returns an automaton which recognizes the regular language associated
 	 * with the regular expression <em>u</em>, where <em>u</em> is a given word.
-	 * 
+	 *
 	 * @param word
 	 *            a List of Object interpreted as a word
 	 * @return an automaton which recognizes <em>label</em>
@@ -181,28 +167,33 @@ public class Automaton<L, Tr extends Transition<L>, T extends Builder<L, Tr, T>>
 	}
 
 	/**
-	 * Creates a new empty automaton which contains no state and no transition.
-	 * An empty automaton recognizes the empty language.
+	 * @return Returns the id.
 	 */
-	public Automaton() {
-		this(null);
+	public Object getId() {
+		return id;
 	}
 
 	/**
-	 * Create a new empty automaton with given state factory.
-	 * 
-	 * @param sf
-	 *            the StateFactory object to use for creating new states. May be
-	 *            null.
+	 * @param id
+	 *            The id to set.
 	 */
-	public Automaton(StateFactory sf) {
-		this.stateFactory = sf == null ? new DefaultStateFactory(this) : sf;
-		alphabet = new HashSet<>();
-		states = stateFactory.stateSet();
-		initials = stateFactory.stateSet();
-		terminals = stateFactory.stateSet();
-		transitions = new HashMap<>();
-		reverse = new HashMap<>();
+	public void setId(Object id) {
+		this.id = id;
+	}
+
+	/**
+	 * @return
+	 */
+	public StateFactory getStateFactory() {
+		return this.stateFactory;
+	}
+
+	/**
+	 * @param factory
+	 */
+	public void setStateFactory(StateFactory factory) {
+		this.stateFactory = factory;
+		factory.setAutomaton(this);
 	}
 
 	/**
@@ -648,38 +639,6 @@ public class Automaton<L, Tr extends Transition<L>, T extends Builder<L, Tr, T>>
         return stateLabels.labels(states);
     }
 
-    private class Key {
-		private State s;
-
-		private L l;
-
-		protected Key(State s, L l) {
-			this.s = s;
-			this.l = l;
-		}
-
-		public boolean equals(Object o) {
-			if (o == null || !(o instanceof Automaton.Key))
-				return false;
-			Key t = (Key) o;
-			boolean ret = (l == null ? t.l == null : l.equals(t.l))	&& (s == null ? t.s == null : s.equals(t.s));
-			return ret;
-		}
-
-		public int hashCode() {
-			int x, y;
-			if (s == null)
-				x = 0;
-			else
-				x = s.hashCode();
-			if (l == null)
-				y = 0;
-			else
-				y = l.hashCode();
-			return y << 16 | x;
-		}
-	}
-
 	/**
 	 * Returns true if this automaton accepts given word -- ie. sequence of
 	 * letters. Note that this method accepts words with letters not in this
@@ -687,7 +646,7 @@ public class Automaton<L, Tr extends Transition<L>, T extends Builder<L, Tr, T>>
 	 * projected to this alphabet.
 	 * <p>
 	 * If you need standard recognition, use
-	 * 
+	 *
 	 * @see{accept(java.util.List) .
 	 * @param word
 	 * @return
@@ -700,7 +659,7 @@ public class Automaton<L, Tr extends Transition<L>, T extends Builder<L, Tr, T>>
 	/**
 	 * Return the set of steps this automaton will be in after reading word.
 	 * Note this method skips letters not in alphabet instead of rejecting them.
-	 * 
+	 *
 	 * @param l
 	 * @return
 	 */
@@ -720,7 +679,7 @@ public class Automaton<L, Tr extends Transition<L>, T extends Builder<L, Tr, T>>
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see rationals.Acceptor#accept(java.util.List)
 	 */
 	@Override
@@ -734,7 +693,7 @@ public class Automaton<L, Tr extends Transition<L>, T extends Builder<L, Tr, T>>
 	 * Return true if this automaton can accept the given word starting from
 	 * given set. <em>Note</em> The ending state(s) need not be terminal for
 	 * this method to return true.
-	 * 
+	 *
 	 * @param state
 	 *            a starting state
 	 * @param word
@@ -750,7 +709,7 @@ public class Automaton<L, Tr extends Transition<L>, T extends Builder<L, Tr, T>>
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see rationals.Acceptor#steps(java.util.List)
 	 */
 	@Override
@@ -762,7 +721,7 @@ public class Automaton<L, Tr extends Transition<L>, T extends Builder<L, Tr, T>>
 	/**
 	 * Return the set of states this automaton will be in after reading the word
 	 * from start states s.
-	 * 
+	 *
 	 * @param s
 	 *            the set of starting states
 	 * @param word
@@ -784,7 +743,7 @@ public class Automaton<L, Tr extends Transition<L>, T extends Builder<L, Tr, T>>
 	/**
 	 * Return the set of states this automaton will be in after reading the word
 	 * from single start state s.
-	 * 
+	 *
 	 * @param st
 	 *            the starting state
 	 * @param word
@@ -809,7 +768,7 @@ public class Automaton<L, Tr extends Transition<L>, T extends Builder<L, Tr, T>>
 	 * Return the list of set of states this automaton will be in after reading
 	 * word from start state. Is start state is null, assume reading from
 	 * initials().
-	 * 
+	 *
 	 * @param word
 	 * @param start
 	 */
@@ -839,8 +798,8 @@ public class Automaton<L, Tr extends Transition<L>, T extends Builder<L, Tr, T>>
 	/**
 	 * Returns the size of the longest word recognized by this automaton where
 	 * letters not belonging to its alphabet are ignored.
-	 * 
-	 * 
+	 *
+	 *
 	 * @param word
 	 * @return
 	 */
@@ -865,7 +824,7 @@ public class Automaton<L, Tr extends Transition<L>, T extends Builder<L, Tr, T>>
 	/**
 	 * Return the set of states accessible in one transition from given set of
 	 * states s and letter o.
-	 * 
+	 *
 	 * @param s
 	 * @param o
 	 * @return
@@ -926,7 +885,7 @@ public class Automaton<L, Tr extends Transition<L>, T extends Builder<L, Tr, T>>
 	 * automaton. This method takes exponential time and space to execute: <em>
    * use with care !</em>
 	 * .
-	 * 
+	 *
 	 * @param i
 	 *            maximal length of words.
 	 * @return a Set of List of Object
@@ -934,6 +893,9 @@ public class Automaton<L, Tr extends Transition<L>, T extends Builder<L, Tr, T>>
 	public Set<List<L>> enumerate(int ln) {
 		Set<List<L>> ret = new HashSet<>();
 		class EnumState {
+			State st;
+			List<L> word;
+
 			/**
 			 * @param s
 			 * @param list
@@ -942,12 +904,7 @@ public class Automaton<L, Tr extends Transition<L>, T extends Builder<L, Tr, T>>
 				st = s;
 				word = new ArrayList<L>(list);
 			}
-
-			State st;
-
-			List<L> word;
 		}
-		;
 		LinkedList<EnumState> ll = new LinkedList<EnumState>();
 		List<L> cur = new ArrayList<>();
 		for (Iterator<State> i = initials.iterator(); i.hasNext();) {
@@ -978,7 +935,7 @@ public class Automaton<L, Tr extends Transition<L>, T extends Builder<L, Tr, T>>
 	/**
 	 * Create a new state with given label. The state is created with as neither
 	 * initial nor terminal.
-	 * 
+	 *
 	 * @param label
 	 *            the state's label. May not be null.
 	 * @return the newly created state.
@@ -996,7 +953,7 @@ public class Automaton<L, Tr extends Transition<L>, T extends Builder<L, Tr, T>>
 	/**
 	 * Starts creation of a new transition from the given state. Note that the
 	 * state is created with given label if it does not exists.
-	 * 
+	 *
 	 * @param o
 	 *            the label of state to create transition from. may not be null.
 	 * @return a TransitionBuilder that can be used to create a new transition.
@@ -1013,5 +970,37 @@ public class Automaton<L, Tr extends Transition<L>, T extends Builder<L, Tr, T>>
 	public void build(State from, L l, State to)
 			throws NoSuchStateException {
 		addTransition(this.builder.build(from, l, to));
+	}
+
+	private class Key {
+		private State s;
+
+		private L l;
+
+		protected Key(State s, L l) {
+			this.s = s;
+			this.l = l;
+		}
+
+		public boolean equals(Object o) {
+			if (o == null || !(o instanceof Automaton.Key))
+				return false;
+			Key t = (Key) o;
+			boolean ret = (l == null ? t.l == null : l.equals(t.l)) && (s == null ? t.s == null : s.equals(t.s));
+			return ret;
+		}
+
+		public int hashCode() {
+			int x, y;
+			if (s == null)
+				x = 0;
+			else
+				x = s.hashCode();
+			if (l == null)
+				y = 0;
+			else
+				y = l.hashCode();
+			return y << 16 | x;
+		}
 	}
 }

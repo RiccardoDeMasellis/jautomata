@@ -50,15 +50,7 @@ public class IOAutomatonSMAdapter implements IOStateMachine {
 	protected IOAutomaton<IOTransition,IOTransitionBuilder> automaton;
 
 	protected Set<State> state;
-
-	private boolean inputEnabled;
-
-	private TransitionSelector selectOutput;
-
-	private TransitionSelector selectInternal;
-
 	protected Object savedInput;
-
 	public final Function<IOAutomaton<IOTransition,IOTransitionBuilder>, Object> lastInput = new Function<IOAutomaton<IOTransition,IOTransitionBuilder>, Object>() {
 
 		public Object apply(IOAutomaton<IOTransition,IOTransitionBuilder> message)
@@ -71,6 +63,9 @@ public class IOAutomatonSMAdapter implements IOStateMachine {
 			return "<last input>";
 		}
 	};
+	private boolean inputEnabled;
+	private TransitionSelector selectOutput;
+	private TransitionSelector selectInternal;
 
 	public IOAutomatonSMAdapter(IOAutomaton<IOTransition,IOTransitionBuilder> a) {
 		this.automaton = a;
@@ -158,7 +153,7 @@ public class IOAutomatonSMAdapter implements IOStateMachine {
 	private boolean doInput(Object o) {
 		boolean ok = false;
 		for (Transition tr : automaton.delta(state)) {
-			IOTransition.IOLetter lt = (IOLetter) ((IOTransition) tr).label();
+			IOTransition.IOLetter lt = (IOLetter) tr.label();
 			if (lt.type == IOAlphabetType.INPUT
 					&& IOSynchronization.inputMatchesLetter(o, lt)) {
 				doTransition(tr.label());
@@ -184,9 +179,13 @@ public class IOAutomatonSMAdapter implements IOStateMachine {
 		return inputEnabled;
 	}
 
+	public void setInputEnabled(boolean b) {
+		this.inputEnabled = b;
+	}
+
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see rationals.ioautomata.IOStateMachine#output()
 	 */
 	public Object output() {
@@ -205,7 +204,7 @@ public class IOAutomatonSMAdapter implements IOStateMachine {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see rationals.ioautomata.IOStateMachine#output(java.lang.Object[], int,
 	 * int)
 	 */
@@ -219,7 +218,7 @@ public class IOAutomatonSMAdapter implements IOStateMachine {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see rationals.ioautomata.IOStateMachine#reset()
 	 */
 	public void reset() {
@@ -228,7 +227,7 @@ public class IOAutomatonSMAdapter implements IOStateMachine {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * rationals.ioautomata.IOStateMachine#setInternalHandler(rationals.ioautomata
 	 * .Function)
@@ -238,7 +237,7 @@ public class IOAutomatonSMAdapter implements IOStateMachine {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see rationals.ioautomata.IOStateMachine#stop()
 	 */
 	public void stop() {
@@ -246,7 +245,7 @@ public class IOAutomatonSMAdapter implements IOStateMachine {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Runnable#run()
 	 */
 	public void run() {
@@ -254,10 +253,6 @@ public class IOAutomatonSMAdapter implements IOStateMachine {
 
 	public Set<State> getState() {
 		return state;
-	}
-
-	public void setInputEnabled(boolean b) {
-		this.inputEnabled = b;
 	}
 
 }

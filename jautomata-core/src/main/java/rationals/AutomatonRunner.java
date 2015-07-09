@@ -32,14 +32,14 @@ public interface AutomatonRunner {
      * 
      * @param l the listener to add - may no be null
      */
-    public void addRunListener(AutomatonRunListener l);
+    void addRunListener(AutomatonRunListener l);
     
     /**
      * Remove a listener from this runner
      * 
      * @param l the listener to remove
      */
-    public void removeRunListener(AutomatonRunListener l);
+    void removeRunListener(AutomatonRunListener l);
 }
 
 /* 

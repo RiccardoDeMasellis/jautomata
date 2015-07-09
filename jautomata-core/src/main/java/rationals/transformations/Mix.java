@@ -101,8 +101,8 @@ public class Mix<L, Tr extends Transition<L>, T extends Builder<L, Tr, T>> imple
 		amap.put(sc, from);
 		todo.add(sc);
 		do {
-			StatesCouple couple = (StatesCouple) todo.remove(0);
-			from = (State) amap.get(couple);
+			StatesCouple couple = todo.remove(0);
+			from = amap.get(couple);
 			if (done.contains(couple))
 				continue;
 			done.add(couple);
@@ -119,7 +119,7 @@ public class Mix<L, Tr extends Transition<L>, T extends Builder<L, Tr, T>> imple
 				if (!alph.contains(l)) {
 					Set<State> asc = TransformationsToolBox.epsilonClosure(as, a);
 					tcm.put(l, sc = new StatesCouple(asc, couple.sb));
-					State to = (State) amap.get(sc);
+					State to = amap.get(sc);
 					makeNewState(ret, amap, sc, to);
 					todo.add(sc);
 					i.remove();

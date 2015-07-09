@@ -85,7 +85,6 @@ public class DefaultLexer implements Lexer {
             current = END;
             return;
         }
-        ;
         int tk;
         try {
             tk = tokenizer.nextToken();

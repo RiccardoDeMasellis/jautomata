@@ -16,12 +16,12 @@
  */
 package rationals;
 
-import java.util.Arrays;
-import java.util.List;
-
 import junit.framework.TestCase;
 import rationals.converters.Expression;
 import rationals.transformations.Pruner;
+
+import java.util.Arrays;
+import java.util.List;
 
 /*
  * Created on Apr 9, 2004
@@ -72,8 +72,8 @@ public class MixPlayTest extends TestCase {
         mp.addAutomaton(b);
         mp.addAutomaton(a);
         //      mp.addAutomaton(c);
-        List check = Arrays.asList(new String[] { "a", "b", "b", "b", "b", "b",
-                "b", "e" });
+        List check = Arrays.asList("a", "b", "b", "b", "b", "b",
+                "b", "e");
         mp.reset();
         List word = mp.play("e");
         assertEquals(check, word);
@@ -89,7 +89,7 @@ public class MixPlayTest extends TestCase {
         mp.addAutomaton(b);
         mp.addAutomaton(a);
         //      mp.addAutomaton(c);
-        List check = Arrays.asList(new String[] { "a", "e" });
+        List check = Arrays.asList("a", "e");
         mp.reset();
         List word = mp.play("e");
         assertEquals(check, word);
@@ -120,11 +120,11 @@ public class MixPlayTest extends TestCase {
         mp.addAutomaton(b);
         mp.addAutomaton(a);
         //      mp.addAutomaton(c);
-        List check = Arrays.asList(new String[] { "a" });
+        List check = Arrays.asList("a");
         mp.reset();
         List word = mp.play("a");
         word = mp.play("e");
-        check = Arrays.asList(new String[] { "e" });
+        check = Arrays.asList("e");
         assertEquals(check, word);
     }
 }

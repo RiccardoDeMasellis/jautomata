@@ -21,5 +21,5 @@ import rationals.Transition;
 
 
 public interface ToString<L, Tr extends Transition<L>, T extends Builder<L, Tr, T>> {
-  public String toString(Automaton<L, Tr, T> a) ;
+  String toString(Automaton<L, Tr, T> a);
 }

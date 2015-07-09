@@ -26,7 +26,6 @@ import rationals.converters.Expression;
 import rationals.converters.ToRExpression;
 import rationals.transformations.Reducer;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -53,7 +52,7 @@ public class TransducerNivatTest extends TestCase {
 		/* check */
 		Automaton b = t.image(a);
 		System.err.println(new ToRExpression().toString(new Reducer().transform(b)));
-		List exp = Arrays.asList(new String[] {  "a", "b","c", "a", "b", "c" });
+		List exp = Arrays.asList("a", "b", "c", "a", "b", "c");
 		assertTrue("Image does not recognizes 'abcabc'",b.accept(exp));
 	}
 
@@ -76,11 +75,11 @@ public class TransducerNivatTest extends TestCase {
 		/* check */
 		Automaton b = t.image(l);
 		System.err.println(new ToRExpression().toString(new Reducer().transform(b)));
-		List exp = Arrays.asList(new String[] {  "a", "b","c", "a", "b", "c" });
+		List exp = Arrays.asList("a", "b", "c", "a", "b", "c");
 		assertTrue("Image does not recognizes 'abcabc'",b.accept(exp));
 	}
-	
-	public void test03Mixin() throws NoSuchStateException, FileNotFoundException, IOException {
+
+	public void test03Mixin() throws NoSuchStateException, IOException {
 		TransducerNivat t = new TransducerNivat();
 		State s0 = t.addState(true, false);
 		State s1 = t.addState(false,false);

@@ -16,8 +16,20 @@
  */
 package rationals.graph;
 
-import java.awt.Color;
-import java.awt.Font;
+import rationals.Automaton;
+import rationals.Transition;
+import salvo.jesus.graph.Edge;
+import salvo.jesus.graph.visual.*;
+import salvo.jesus.graph.visual.drawing.Painter;
+import salvo.jesus.graph.visual.drawing.VisualDirectedEdgePainterImpl;
+import salvo.jesus.graph.visual.drawing.VisualEdgePainter;
+import salvo.jesus.graph.visual.drawing.VisualVertexPainterFactory;
+import salvo.jesus.graph.visual.layout.DigraphLayeredLayout;
+import salvo.jesus.graph.visual.layout.GraphLayoutManager;
+import salvo.jesus.graph.visual.print.VisualGraphImageOutput;
+import salvo.jesus.util.VisualGraphComponentPath;
+
+import java.awt.*;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.Arc2D;
@@ -30,24 +42,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
-
-import rationals.Automaton;
-import rationals.Transition;
-import salvo.jesus.graph.Edge;
-import salvo.jesus.graph.visual.Arrowhead;
-import salvo.jesus.graph.visual.VisualEdge;
-import salvo.jesus.graph.visual.VisualGraph;
-import salvo.jesus.graph.visual.VisualGraphComponent;
-import salvo.jesus.graph.visual.VisualGraphComponentFactory;
-import salvo.jesus.graph.visual.VisualVertex;
-import salvo.jesus.graph.visual.drawing.Painter;
-import salvo.jesus.graph.visual.drawing.VisualDirectedEdgePainterImpl;
-import salvo.jesus.graph.visual.drawing.VisualEdgePainter;
-import salvo.jesus.graph.visual.drawing.VisualVertexPainterFactory;
-import salvo.jesus.graph.visual.layout.DigraphLayeredLayout;
-import salvo.jesus.graph.visual.layout.GraphLayoutManager;
-import salvo.jesus.graph.visual.print.VisualGraphImageOutput;
-import salvo.jesus.util.VisualGraphComponentPath;
 
 /**
  * A class to produce VisualGraphComponent from Automaton states and
@@ -119,6 +113,50 @@ public class AutomatonVisualFactory extends VisualVertexPainterFactory
   public AutomatonVisualFactory() {
   }
 
+  /**
+   * @throws FileNotFoundException
+   * @throws IOException
+   */
+  public static void epsOutput(Automaton a, String fname, GraphLayoutManager lay)
+          throws IOException {
+    FileOutputStream fos = new FileOutputStream(fname);
+    epsOutput(a, fos, lay);
+    fos.flush();
+    fos.close();
+  }
+
+  /**
+   * @param a
+   * @param output
+   * @param object
+   * @throws IOException
+   */
+  public static void epsOutput(Automaton a, OutputStream output,
+                               GraphLayoutManager lay) throws IOException {
+    imageOutput(a, output, lay, "eps");
+  }
+
+  public static void imageOutput(Automaton a, OutputStream output,
+                                 GraphLayoutManager lay, String format) throws IOException {
+    VisualGraph vg = new VisualGraph();
+    AutomatonVisualFactory fact = new AutomatonVisualFactory();
+    vg.setVisualGraphComponentFactory(fact);
+    vg.setGraph(new AutomatonGraphAdapter(a));
+    if (lay == null) {
+      lay = new DigraphLayeredLayout(vg);
+      ((DigraphLayeredLayout) lay).setDirected(true);
+      ((DigraphLayeredLayout) lay).setRoots(a.initials());
+    }
+    vg.setGraphLayoutManager(lay);
+    lay.setVisualGraph(vg);
+    lay.setRepaint(false);
+    lay.layout();
+    vg.repaint();
+    VisualGraphImageOutput out = new VisualGraphImageOutput();
+    out.setFormat(format);
+    out.output(vg, output);
+  }
+
   public Color getVertexBackground() {
     return vertexBackground;
   }
@@ -170,7 +208,7 @@ public class AutomatonVisualFactory extends VisualVertexPainterFactory
 
   /**
    * The given Vertex must have been created containing an instance of State
-   * 
+   *
    * @see salvo.jesus.graph.visual.VisualGraphComponentFactory#createVisualVertex
    */
   public VisualVertex createVisualVertex(Object vertex, VisualGraph graph) {
@@ -236,7 +274,7 @@ public class AutomatonVisualFactory extends VisualVertexPainterFactory
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see salvo.jesus.graph.visual.drawing.PainterFactory#getPainter(salvo.jesus.graph.visual.VisualGraphComponent)
    */
   public Painter getPainter(VisualGraphComponent component) {
@@ -245,50 +283,6 @@ public class AutomatonVisualFactory extends VisualVertexPainterFactory
     else if (component instanceof VisualEdge)
       return edgePainter;
     return null;
-  }
-
-  /**
-   * @throws FileNotFoundException
-   * @throws IOException
-   */
-  public static void epsOutput(Automaton a, String fname, GraphLayoutManager lay)
-      throws FileNotFoundException, IOException {
-    FileOutputStream fos = new FileOutputStream(fname);
-    epsOutput(a, fos, lay);
-    fos.flush();
-    fos.close();
-  }
-
-  /**
-   * @param a
-   * @param output
-   * @param object
-   * @throws IOException
-   */
-  public static void epsOutput(Automaton a, OutputStream output,
-      GraphLayoutManager lay) throws IOException {
-    imageOutput(a, output, lay, "eps");
-  }
-
-  public static void imageOutput(Automaton a, OutputStream output,
-      GraphLayoutManager lay, String format) throws IOException {
-    VisualGraph vg = new VisualGraph();
-    AutomatonVisualFactory fact = new AutomatonVisualFactory();
-    vg.setVisualGraphComponentFactory(fact);
-    vg.setGraph(new AutomatonGraphAdapter(a));
-    if (lay == null) {
-      lay = new DigraphLayeredLayout(vg);
-      ((DigraphLayeredLayout) lay).setDirected(true);
-      ((DigraphLayeredLayout) lay).setRoots(a.initials());
-    }
-    vg.setGraphLayoutManager(lay);
-    lay.setVisualGraph(vg);
-    lay.setRepaint(false);
-    lay.layout();
-    vg.repaint();
-    VisualGraphImageOutput out = new VisualGraphImageOutput();
-    out.setFormat(format);
-    out.output(vg, output);
   }
 
   /**

@@ -21,5 +21,5 @@ import rationals.Builder;
 import rationals.Transition;
 
 public interface UnaryTransformation<L, Tr extends Transition<L>, T extends Builder<L, Tr, T>> {
-  public Automaton<L, Tr, T> transform(Automaton<L, Tr, T> a) ;
+  Automaton<L, Tr, T> transform(Automaton<L, Tr, T> a);
 }

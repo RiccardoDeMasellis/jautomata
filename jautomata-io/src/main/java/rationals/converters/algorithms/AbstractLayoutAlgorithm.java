@@ -16,11 +16,11 @@
  */
 package rationals.converters.algorithms;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import rationals.Automaton;
 import rationals.converters.ConverterException;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Base class for algorithms. Implements tweak method for 
@@ -70,7 +70,7 @@ public abstract class AbstractLayoutAlgorithm implements LayoutAlgorithm {
 					try {
 						java.lang.reflect.Method wmeth =
 							props[i].getWriteMethod();
-						wmeth.invoke(this, new Object[] { val });
+						wmeth.invoke(this, val);
 					} catch (Exception ex) {
 						System.err.println("DEBUG >>>> Caught exception " + ex);
 					}
@@ -127,16 +127,16 @@ public abstract class AbstractLayoutAlgorithm implements LayoutAlgorithm {
 	}
 
 	/**
-	 * @see rationals.converters.algorithms.LayoutAlgorithm#work()
-	 */
-	public void work() {
-	}
-
-	/**
 	 * @see rationals.converters.algorithms.LayoutAlgorithm#setState(Map)
 	 */
 	public void setState(Map m) {
 		statesCoord = m;
+	}
+
+	/**
+	 * @see rationals.converters.algorithms.LayoutAlgorithm#work()
+	 */
+	public void work() {
 	}
 
 }

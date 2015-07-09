@@ -30,5 +30,5 @@ public class PartialCommutation implements UnaryTransformation{
     public Automaton transform(Automaton a) {
         Automaton b = new Automaton();
         return a;
-    };
+    }
 }

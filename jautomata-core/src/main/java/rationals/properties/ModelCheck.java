@@ -57,10 +57,7 @@ public class ModelCheck<L, Tr extends Transition<L>, T extends Builder<L, Tr, T>
     	Automaton<L, Tr, T> bDFA = new ToDFA<L, Tr, T>().transform(b);
         Automaton<L, Tr, T> caDFA = new Complement<L, Tr, T>().transform(aDFA);
         cex = new Pruner<L, Tr, T>().transform(new Mix<L, Tr, T>().transform(caDFA, bDFA));
-        if (new isEmpty<L, Tr, T>().test(cex))
-            return true;
-        else
-            return false;
+        return new isEmpty<L, Tr, T>().test(cex);
     }
 
     /**

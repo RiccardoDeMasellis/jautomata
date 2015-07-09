@@ -16,11 +16,7 @@
  */
 package rationals.transformations;
 
-import rationals.Automaton;
-import rationals.Builder;
-import rationals.NoSuchStateException;
-import rationals.State;
-import rationals.Transition;
+import rationals.*;
 
 import java.util.*;
 
@@ -62,10 +58,7 @@ public class Reducer<L, Tr extends Transition<L>, T extends Builder<L, Tr, T>> i
                     return false;
             }
         }
-        if (!tbs.isEmpty()) {
-            return false;
-        }
-        return true;
+        return tbs.isEmpty();
     }
 
     public Automaton<L, Tr, T> transform(Automaton<L, Tr, T> a) {

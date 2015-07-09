@@ -26,5 +26,5 @@ import rationals.Transition;
  * @version $Id: BinaryTransformation.java 2 2006-08-24 14:41:48Z oqube $
  */
 public interface BinaryTransformation<L, Tr extends Transition<L>, T extends Builder<L, Tr, T>> {
-  public Automaton<L, Tr, T> transform(Automaton<L, Tr, T> a , Automaton<L, Tr, T> b) ;
+  Automaton<L, Tr, T> transform(Automaton<L, Tr, T> a, Automaton<L, Tr, T> b);
 }

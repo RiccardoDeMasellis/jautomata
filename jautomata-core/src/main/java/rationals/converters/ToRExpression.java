@@ -106,7 +106,7 @@ public class ToRExpression<Tr extends Transition<String>, T extends Builder<Stri
                     State s2 = t2.end();
                     State s1 = t1.end();
                     Couple k = new Couple(s1, s2);
-                    String oldre = (String) keys.get(k);
+                    String oldre = keys.get(k);
                     String nre = t1.label() + "" + re + t2.label();
                     if (oldre == null) {
                         oldre = nre;
@@ -124,7 +124,7 @@ public class ToRExpression<Tr extends Transition<String>, T extends Builder<Stri
             }
         }
         /* returns the transition from stat to end */
-        re = (String) keys.get(new Couple(init,fini));
+        re = keys.get(new Couple(init, fini));
         return re;
     }
 

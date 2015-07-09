@@ -16,11 +16,7 @@
  */
 package rationals;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Instances of this class are random automata. A RandomAutomaton is generated
@@ -130,7 +126,7 @@ public class RandomAutomaton<L, Tr extends Transition<L>, T extends Builder<L, T
         todo.add(init);
         while (ns > 0) {
             /* pop state */
-            State from = (State) todo.remove(0);
+            State from = todo.remove(0);
             done.add(from);
             /* list for alph */
             List<L> l = new ArrayList<>(Arrays.asList(alph));

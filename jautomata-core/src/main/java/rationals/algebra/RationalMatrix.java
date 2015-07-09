@@ -16,15 +16,15 @@
  */
 package rationals.algebra;
 
-import java.util.Iterator;
-import java.util.Set;
-
 import rationals.Rational;
 import rationals.State;
 import rationals.Transition;
 import rationals.expr.Letter;
 import rationals.expr.Plus;
 import rationals.expr.RationalExpr;
+
+import java.util.Iterator;
+import java.util.Set;
 
 /**
  * A matrix for representing regular languages.
@@ -41,10 +41,50 @@ public class RationalMatrix  {
     private Matrix init;
     private Matrix fini;
     private Matrix transitions;
-    
+
     /**
-	 * @return Returns the fini.
-	 */
+     * Construct the matrix of a rational language.
+     *
+     * @param rat a Rational language.
+     */
+    public RationalMatrix(Rational rat) {
+        Set st = rat.states();
+        int n = st.size();
+        init = Matrix.zero(1, n, RationalExpr.zero);
+        fini = Matrix.zero(n, 1, RationalExpr.zero);
+        transitions = Matrix.zero(n, n, RationalExpr.zero);
+        State[] sta = (State[]) rat.states().toArray(new State[n]);
+        /* fill matrices */
+        for (int i = 0; i < sta.length; i++) {
+            if (sta[i].isInitial())
+                init.matrix[0][i] = Letter.epsilon;
+            else
+                init.matrix[0][i] = RationalExpr.zero;
+            if (sta[i].isTerminal())
+                fini.matrix[i][0] = Letter.epsilon;
+            else
+                fini.matrix[i][0] = RationalExpr.zero;
+            /* transitions */
+            for (int j = 0; j < n; j++) {
+                Set trs = rat.deltaFrom(sta[i], sta[j]);
+                RationalExpr re = null;
+                for (Iterator it = trs.iterator(); it.hasNext(); ) {
+                    Transition tr = (Transition) it.next();
+                    Object o = tr.label();
+                    Letter l = (o == null) ? Letter.epsilon : new Letter(o);
+                    if (re == null)
+                        re = l;
+                    else
+                        re = new Plus(re, l);
+                }
+                transitions.matrix[i][j] = re == null ? RationalExpr.zero : re;
+            }
+        }
+    }
+
+    /**
+     * @return Returns the fini.
+     */
 	public Matrix getFini() {
 		return fini;
 	}
@@ -83,47 +123,6 @@ public class RationalMatrix  {
 	public void setTransitions(Matrix transitions) {
 		this.transitions = transitions;
 	}
-
-	/**
-     * Construct the matrix of a rational language.
-     * 
-     * @param rat
-     *            a Rational language.
-     */
-    public RationalMatrix(Rational rat) {
-        Set st = rat.states();
-        int n = st.size();
-        init = Matrix.zero(1,n,RationalExpr.zero);
-        fini = Matrix.zero(n,1,RationalExpr.zero);
-        transitions = Matrix.zero(n,n,RationalExpr.zero);
-        State[] sta = (State[]) rat.states().toArray(new State[n]);
-        /* fill matrices */
-        for (int i = 0; i < sta.length; i++) {
-            if (sta[i].isInitial())
-                init.matrix[0][i] = Letter.epsilon;
-            else 
-                init.matrix[0][i] = RationalExpr.zero;
-            if (sta[i].isTerminal())
-                fini.matrix[i][0] = Letter.epsilon;
-            else 
-                fini.matrix[i][0] = RationalExpr.zero;
-            /* transitions */
-            for (int j = 0; j < n; j++) {
-                Set trs = rat.deltaFrom(sta[i], (State) sta[j]);
-                RationalExpr re = null;
-                for (Iterator it = trs.iterator(); it.hasNext();) {
-                    Transition tr = (Transition) it.next();
-                    Object o = tr.label();
-                    Letter l = (o == null) ? Letter.epsilon : new Letter(o);
-                    if (re == null)
-                        re = l;
-                    else
-                        re = new Plus(re, l);
-                }
-                transitions.matrix[i][j] = re == null ? RationalExpr.zero : re;
-            }
-        }
-    }
 
     /**
      * Compute words from this rational whose length is 

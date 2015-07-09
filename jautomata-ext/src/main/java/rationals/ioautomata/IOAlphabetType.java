@@ -23,5 +23,5 @@ package rationals.ioautomata;
  * @version $Id: IOAlphabetType.java 2 2006-08-24 14:41:48Z oqube $
  */
 public enum IOAlphabetType {
-	INPUT, OUTPUT, INTERNAL;
+	INPUT, OUTPUT, INTERNAL
 }

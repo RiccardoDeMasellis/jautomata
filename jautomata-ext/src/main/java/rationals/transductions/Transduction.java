@@ -16,10 +16,10 @@
  */
 package rationals.transductions;
 
+import rationals.Automaton;
+
 import java.util.List;
 import java.util.Set;
-
-import rationals.Automaton;
 
 /**
  * Definition and requirements for  a rational transduction.
@@ -41,7 +41,7 @@ public interface Transduction {
      * @return a - possibly empty - regular language which is the image
      * of a through this relation.
      */
-    public Automaton image(Automaton a);
+    Automaton image(Automaton a);
     
     /**
      * Compute the image of <code>word</code> by this relation.
@@ -49,7 +49,7 @@ public interface Transduction {
      * @param word a List of letters in the domain of this transduction
      * @return an Automaton representing the image of word.
      */
-    public Automaton image(List word);
+    Automaton image(List word);
     
     /**
      * Compute the image of <code>word</code> by this relation.
@@ -57,7 +57,7 @@ public interface Transduction {
      * @param word an array of Objects representing the word to be transformed
      * @return an Automaton representing the image of word.
      */
-    public Automaton image(Object[] word);
+    Automaton image(Object[] word);
     
     /**
      * Compute the image of <code>word</code> by the inverse of this relation.
@@ -65,6 +65,6 @@ public interface Transduction {
      * @param word a List of letters in the codomain of this transduction
      * @return a Set of List of words which are the images of word 
      */
-    public Set inverse(List word);
+    Set inverse(List word);
     
 }

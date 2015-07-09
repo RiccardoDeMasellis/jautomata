@@ -17,7 +17,6 @@
 package rationals.converters.algorithms;
 
 import rationals.Automaton;
-import rationals.State;
 import rationals.converters.ConverterException;
 
 import java.util.Iterator;
@@ -45,7 +44,7 @@ public final class NullLayoutAlgorithm extends AbstractLayoutAlgorithm {
 		Iterator it = automata.states().iterator();
 		while (it.hasNext()) {
 			Coord c = new Coord(0, 0);
-			statesCoord.put(c, (State) it.next());
+			statesCoord.put(c, it.next());
 		}
 	}
 

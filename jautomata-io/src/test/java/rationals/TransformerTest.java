@@ -29,13 +29,20 @@ import java.util.List;
  */
 public class TransformerTest extends TestCase {
 
-    private Automaton aut;
-
     private static final File tmp = new File(TransformerTest.class.getProtectionDomain().getCodeSource().getLocation().getFile());
-
+    private Automaton aut;
     private File test1;
     private File test2;
     private File out;
+
+    /**
+     * Constructor for TransformerTest.
+     *
+     * @param arg0
+     */
+    public TransformerTest(String arg0) {
+        super(arg0);
+    }
 
     /*
      * @see TestCase#setUp()
@@ -46,14 +53,13 @@ public class TransformerTest extends TestCase {
         test1 = new File(tmp, "test1.auto");
         test2 = new File(tmp, "test2.auto");
         out = new File(tmp, "test.auto");
-        
+
         aut = new Expression().fromString("ab*");
         StreamEncoder enc= Codecs.encoder("auto");
-        enc.output(aut,new FileOutputStream(test1));
+        enc.output(aut, new FileOutputStream(test1));
         Automaton a = new Expression().fromString("ac*");
-        enc.output(a,new FileOutputStream(test2));
+        enc.output(a, new FileOutputStream(test2));
      }
-
     
     protected void tearDown() throws Exception {
         super.tearDown();
@@ -61,14 +67,6 @@ public class TransformerTest extends TestCase {
         test1.delete();
         test2.delete();
         out.delete();
-    }
-    
-    /**
-     * Constructor for TransformerTest.
-     * @param arg0
-     */
-    public TransformerTest(String arg0) {
-        super(arg0);
     }
 
     public void testUnary() throws ConverterException, IOException {
@@ -81,7 +79,7 @@ public class TransformerTest extends TestCase {
         /* decode output */
         StreamDecoder dec = Codecs.decoder("auto");
         Automaton a = dec.input(new ByteArrayInputStream(bos.toByteArray()));
-        List word = Arrays.asList(new String[]{"a","b","b"});
+        List word = Arrays.asList("a", "b", "b");
         assertTrue(a.accept(word));
     }
 
@@ -94,7 +92,7 @@ public class TransformerTest extends TestCase {
         StreamDecoder dec = Codecs.decoder("auto");
         assertTrue(out.exists());
         Automaton a = dec.input(new FileInputStream(out));
-        List word = Arrays.asList(new String[]{"a","b","b"});
+        List word = Arrays.asList("a", "b", "b");
         assertTrue(a.accept(word));
     }
 
@@ -108,11 +106,11 @@ public class TransformerTest extends TestCase {
         StreamDecoder dec = Codecs.decoder("auto");
         assertTrue(out.exists());
         Automaton a = dec.input(new FileInputStream(out));
-        List word = Arrays.asList(new String[]{"a","b","b"});
+        List word = Arrays.asList("a", "b", "b");
         assertTrue(a.accept(word));
     }
-    
-    public void testBinary() throws FileNotFoundException, IOException {
+
+    public void testBinary() throws IOException {
         String[] args = new String[]{"Mix","-o",out.getAbsolutePath(),test1.getAbsolutePath(),test2.getAbsolutePath()};
         /* collect output */
         ByteArrayOutputStream bos;
@@ -121,8 +119,8 @@ public class TransformerTest extends TestCase {
         StreamDecoder dec = Codecs.decoder("auto");
         assertTrue(out.exists());
         Automaton a = dec.input(new FileInputStream(out));
-        List word = Arrays.asList(new String[]{"a","b","b"});
-        List word2 = Arrays.asList(new String[]{"a","c","c"});
+        List word = Arrays.asList("a", "b", "b");
+        List word2 = Arrays.asList("a", "c", "c");
         assertTrue(a.accept(word)&&a.accept(word2));        
     }
 }

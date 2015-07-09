@@ -144,7 +144,7 @@ public class TypeHelper {
     private static Object invokeCtor(Constructor ctor,String str)
     {
 	try {
-	    return ctor.newInstance(new Object[]{str});
+		return ctor.newInstance(str);
 	}catch(Throwable t) {
 	    System.err.println("Error in constructor invocation with argument "+str+" : "+t.getMessage());
 	    return null;
@@ -155,7 +155,7 @@ public class TypeHelper {
     {
 	try {
 	    // assume method is static
-	    return meth.invoke(null,new Object[]{str});
+		return meth.invoke(null, str);
 	}catch(Throwable t) {
 	    System.err.println("Error in method invocation with argument "+str+" : "+t.getMessage());
 	    return null;

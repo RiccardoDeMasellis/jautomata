@@ -38,8 +38,6 @@ public class isNormalized<L, Tr extends Transition<L>, T extends Builder<L, Tr, 
         if (a.deltaMinusOne(e).size() > 0)
             return false;
         e = a.terminals().iterator().next();
-        if (a.delta(e).size() > 0)
-            return false;
-        return true;
+        return a.delta(e).size() <= 0;
     }
 }

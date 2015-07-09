@@ -22,5 +22,5 @@ import rationals.Transition;
 
 
 public interface FromString<Tr extends Transition<String>, T extends Builder<String, Tr, T>> {
-  public Automaton<String, Tr, T> fromString(String s) throws ConverterException ;
+  Automaton<String, Tr, T> fromString(String s) throws ConverterException;
 }

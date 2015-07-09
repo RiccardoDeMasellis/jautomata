@@ -16,12 +16,6 @@
  */
 package rationals.transductions;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.Set;
-
 import junit.framework.TestCase;
 import rationals.NoSuchStateException;
 import rationals.State;
@@ -29,6 +23,11 @@ import rationals.Transition;
 import rationals.converters.ToRExpression;
 import rationals.transductions.testing.UTestGenerator;
 import rationals.transductions.testing.WTestGenerator;
+
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.Set;
 
 /**
  * @author nono
@@ -83,7 +82,7 @@ public class TransducerTestTest extends TestCase {
      * Test method U
      */
     public void testMethodU() throws NoSuchStateException,
-            TransductionException, FileNotFoundException, IOException {
+            TransductionException, IOException {
         UTestGenerator tester = new UTestGenerator();
         State init = (State) t.initials().iterator().next();
         Set s = tester.testSuite(t);

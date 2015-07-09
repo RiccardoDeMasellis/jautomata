@@ -47,8 +47,8 @@ public class AutomatonBuilderTest extends TestCase {
 		a.from("other").on("c").go("next");
 		a.state("next").setTerminal(true);
 		a.state("init").setInitial(true);
-		assertTrue("automaton should accept word 'abcbc'", a.accept(Arrays.asList(new String[] { "a", "b", "c", "b", "c" })));
-		assertTrue("automaton should not accept word 'ab'", !a.accept(Arrays.asList(new String[] { "a", "b" })));
+		assertTrue("automaton should accept word 'abcbc'", a.accept(Arrays.asList("a", "b", "c", "b", "c")));
+		assertTrue("automaton should not accept word 'ab'", !a.accept(Arrays.asList("a", "b")));
 	}
 
 	public void testAddSeveralTransitionsFromSameStateAndLoops() {
@@ -56,8 +56,8 @@ public class AutomatonBuilderTest extends TestCase {
 		a.from("next").on("c").loop().on("b").go("other");
 		a.state("init").setInitial(true);
 		a.state("other").setTerminal(true);
-		assertTrue("automaton should accept word 'accb'", a.accept(Arrays.asList(new String[] { "a", "c", "c", "b" })));
-		assertTrue("automaton should not accept word 'a'", !a.accept(Arrays.asList(new String[] { "a" })));
+		assertTrue("automaton should accept word 'accb'", a.accept(Arrays.asList("a", "c", "c", "b")));
+		assertTrue("automaton should not accept word 'a'", !a.accept(Arrays.asList("a")));
 	}
 
 	public void testRestartBuilderFromOtherState() {
@@ -65,8 +65,8 @@ public class AutomatonBuilderTest extends TestCase {
 				"c").loop().on("b").go("other");
 		a.state("init").setInitial(true);
 		a.state("other").setTerminal(true);
-		assertTrue("automaton should accept word 'accb'", a.accept(Arrays.asList(new String[] { "a", "c", "c", "b" })));
-		assertTrue("automaton should not accept word 'a'", !a.accept(Arrays.asList(new String[] { "a" })));
+		assertTrue("automaton should accept word 'accb'", a.accept(Arrays.asList("a", "c", "c", "b")));
+		assertTrue("automaton should not accept word 'a'", !a.accept(Arrays.asList("a")));
 	}
 
 	public void setUp() {

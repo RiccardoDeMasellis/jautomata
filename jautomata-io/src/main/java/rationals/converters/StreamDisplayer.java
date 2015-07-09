@@ -31,7 +31,7 @@ public interface StreamDisplayer extends Displayer {
 	 * 
 	 * @param a java.io.OutputStream object
 	 */
-	public void setOutputStream(java.io.OutputStream os)
+	void setOutputStream(java.io.OutputStream os)
 		throws java.io.IOException;
 
 	/**
@@ -39,7 +39,7 @@ public interface StreamDisplayer extends Displayer {
 	 * 
 	 * @param a String naming a file on the file system
 	 */
-	public void setOutputFileName(String fname) throws java.io.IOException;
+	void setOutputFileName(String fname) throws java.io.IOException;
 
 	
 }

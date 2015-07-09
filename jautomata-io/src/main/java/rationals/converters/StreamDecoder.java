@@ -16,10 +16,10 @@
  */
 package rationals.converters;
 
+import rationals.Automaton;
+
 import java.io.IOException;
 import java.io.InputStream;
-
-import rationals.Automaton;
 
 /**
  * An interface for constructing an Automaton from a given stream.
@@ -45,6 +45,6 @@ public interface StreamDecoder {
      * @throws IOException if something bad happens in the underlying stream.
      * @see StreamEncoder.output(rationals.Automaton, java.io.OutputStream)
      */
-    public Automaton input(InputStream is) throws IOException;
+    Automaton input(InputStream is) throws IOException;
 
 }

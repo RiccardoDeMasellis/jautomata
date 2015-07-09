@@ -16,13 +16,13 @@
  */
 package rationals.properties;
 
-import java.util.List;
-import java.util.Set;
-
 import rationals.Automaton;
 import rationals.Builder;
 import rationals.State;
 import rationals.Transition;
+
+import java.util.List;
+import java.util.Set;
 
 /**
  * An interface for computing equivalences between automata.
@@ -63,7 +63,7 @@ public interface Relation<L, Tr extends Transition<L>, T extends Builder<L, Tr, 
      * @param nsb a Set of State objects from b
      * @return true if nsa is equivalent to nsb
      */
-    public boolean equivalence(Set<State> nsa, Set<State> nsb);
+    boolean equivalence(Set<State> nsa, Set<State> nsb);
     
     /**
      * Returns the trace of labels that lead to an error.
@@ -72,6 +72,6 @@ public interface Relation<L, Tr extends Transition<L>, T extends Builder<L, Tr, 
      * 
      * @return a List of objects or null.
      */
-    public List<L> getErrorTrace() throws UnsupportedOperationException;
+    List<L> getErrorTrace() throws UnsupportedOperationException;
 
 }

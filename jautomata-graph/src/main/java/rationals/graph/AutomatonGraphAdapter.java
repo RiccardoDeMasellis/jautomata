@@ -54,14 +54,10 @@ public class AutomatonGraphAdapter implements DirectedGraph {
   
   private Automaton auto;
 
-  public Automaton getAutomaton() {
-    return auto;
-  }
-  
   /**
    * Default constructor.
    * Creates an adapter that wraps the given automaton.
-   * 
+   *
    * @param auto the Automaton object to wrap. May not be null.
    */
   public AutomatonGraphAdapter(Automaton auto) {
@@ -74,6 +70,10 @@ public class AutomatonGraphAdapter implements DirectedGraph {
     this.factory = new DirectedGraphImplFactory();
     traversal = new DepthFirstGraphTraversal(this);
   }
+
+	public Automaton getAutomaton() {
+		return auto;
+	}
 
   
   /////////////////////////////////////////////////////
@@ -176,11 +176,8 @@ public class AutomatonGraphAdapter implements DirectedGraph {
     
     this.getTraversal().traverse(fromVertex, visited,
 				 new StopAtVisitor(toVertex));
-    if (toVertex == visited.get(visited.size() - 1))
-      return true;
-    else
-      return false;
-    
+	  return toVertex == visited.get(visited.size() - 1);
+
   }
 
 	/*
@@ -288,7 +285,7 @@ public class AutomatonGraphAdapter implements DirectedGraph {
 		Iterator it = auto.states().iterator();
 		List vertices = new ArrayList();
 		while (it.hasNext()) {
-			vertices.add((Object) it.next());
+			vertices.add(it.next());
 		}
 		return vertices;
 	}
@@ -391,7 +388,7 @@ public class AutomatonGraphAdapter implements DirectedGraph {
 		if (set.size() > 0) {
 			v = (State) Collections.max(set, new Comparator() {
 				public int compare(Object obj1, Object obj2) {
-					Object v1 = (Object) obj1, v2 = (Object) obj2;
+					Object v1 = obj1, v2 = obj2;
 					int countv1 = getDegree(v1);
 					int countv2 = getDegree(v2);
 
@@ -407,7 +404,7 @@ public class AutomatonGraphAdapter implements DirectedGraph {
 					return objcomparator.equals(this);
 				}
 			});
-			return this.getEdges((Object) v).size();
+			return this.getEdges(v).size();
 		} else
 			return 0;
 	}
@@ -433,7 +430,7 @@ public class AutomatonGraphAdapter implements DirectedGraph {
 
 		iterator = auto.states().iterator();
 		while (iterator.hasNext()) {
-			vertex = (Object) iterator.next();
+			vertex = iterator.next();
 			if (this.getAdjacentVertices(vertex).size() == degree)
 				verticesofsamedegree.add(vertex);
 		}
@@ -478,7 +475,7 @@ public class AutomatonGraphAdapter implements DirectedGraph {
 		List adjv;
 		Iterator adjvIt;
 		while (it.hasNext()) {
-			current = (Object) it.next();
+			current = it.next();
 			adjv = this.getAdjacentVertices(current);
 			adjvIt = adjv.iterator();
 			while (adjvIt.hasNext()) {

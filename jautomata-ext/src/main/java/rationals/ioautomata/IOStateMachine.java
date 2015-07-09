@@ -47,21 +47,21 @@ public interface IOStateMachine extends Runnable {
    * @param o
    *          the input event.
    */
-  public void input(Object o);
+  void input(Object o);
 
   /**
    * Returns true if input never blocks, false otherwise.
    * 
    * @return inputenabledness of this machine.
    */
-  public boolean isInputEnabled();
+  boolean isInputEnabled();
 
   /**
    * Receives an output from this machine or null.
    * 
    * @return an output event or null if no output is available.
    */
-  public Object output();
+  Object output();
 
   /**
    * Fills array <code>o</code>, starting at <code>index</code> with at
@@ -76,27 +76,27 @@ public interface IOStateMachine extends Runnable {
    *          maximum number of events to receive.
    * @return number of events sent.
    */
-  public int output(Object[] o, int start, int len);
+  int output(Object[] o, int start, int len);
 
   /**
    * Returns the number of available output events from this machine.
    * 
    * @return number of available outputs.
    */
-  public int availableOutput();
+  int availableOutput();
 
   /**
    * Reset this machine to its initial state.
    * 
    * 
    */
-  public void reset();
+  void reset();
 
   /**
    * Stop this machine's thread if running.
    * 
    */
-  public void stop();
+  void stop();
 
   /**
    * Set the function associated with processing internal messages in this state

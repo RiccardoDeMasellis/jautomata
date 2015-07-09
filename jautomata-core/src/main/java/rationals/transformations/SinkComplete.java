@@ -54,7 +54,7 @@ public class SinkComplete implements UnaryTransformation {
      * @see rationals.transformations.UnaryTransformation#transform(rationals.Automaton)
      */
     public Automaton transform(Automaton a) {
-      Automaton b = (Automaton) a.clone();
+        Automaton b = a.clone();
       Set alph = (alphabet == null) ? b.alphabet() : alphabet;
       State hole = null;
       Set states = b.getStateFactory().stateSet();

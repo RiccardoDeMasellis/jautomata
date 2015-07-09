@@ -16,26 +16,15 @@
  */
 package rationals.converters;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
-import java.util.StringTokenizer;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import rationals.Automaton;
 import rationals.NoSuchStateException;
 import rationals.State;
 import rationals.Transition;
+
+import java.io.*;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * A codec for rationals that stores an automaton in a specific format 
@@ -123,14 +112,8 @@ public class JAutoCodec implements StreamEncoder,StreamDecoder {
         while(it.hasNext()) {
             boolean init,fini;
             String s = (String)it.next();
-            if(iset.contains(s))
-                init = true;
-            else
-                init =false;
-            if(tset.contains(s))
-                fini = true;
-            else
-                fini = false;
+            init = iset.contains(s);
+            fini = tset.contains(s);
             smap.put(s,a.addState(init,fini));
         }
         /* transitions */

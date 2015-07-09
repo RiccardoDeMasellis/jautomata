@@ -16,10 +16,10 @@
  */
 package rationals.transductions.testing;
 
-import java.util.Set;
-
 import rationals.transductions.DeterministicTransducer;
 import rationals.transductions.TransductionException;
+
+import java.util.Set;
 
 /**
  * Base interface for generating testing sequences for deterministic transducers.
@@ -37,6 +37,6 @@ public interface TransducerTestGenerator {
      * @return a set of input words - arrays of Object - for the transducer 
      * @throws TransductionException if something bad happens while constructing test suite.
      */
-    public Set testSuite(DeterministicTransducer t) throws TransductionException;
+    Set testSuite(DeterministicTransducer t) throws TransductionException;
     
 }

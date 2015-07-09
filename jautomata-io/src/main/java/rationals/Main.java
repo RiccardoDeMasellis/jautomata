@@ -272,7 +272,7 @@ public class Main {
 			try {
 				((StreamDisplayer) display).setOutputStream(output);
 				if (algorithm != null)
-					 ((StreamDisplayer) display).setAlgorithm(algorithm);
+					display.setAlgorithm(algorithm);
 			} catch (Exception ex) {
 				System.err.println("Error in setting displayer output : " + ex);
 				System.exit(1);

@@ -40,9 +40,9 @@ public class InverseMorphismTest extends TestCase {
 		m.put("c", "a");
 		InverseMorphism im = new InverseMorphism(m);
 		Automaton res = im.transform(a);
-		List exp = Arrays.asList(new String[] { "c", "a", "b", "c", "a", "b" });
+		List exp = Arrays.asList("c", "a", "b", "c", "a", "b");
 		assertTrue("Does not accept 'cabcab'", res.accept(exp));
-		exp = Arrays.asList(new String[] { "a", "b", "c" });
+		exp = Arrays.asList("a", "b", "c");
 		assertTrue("Does accept 'abc'", !res.accept(exp));
 	}
 
@@ -56,10 +56,10 @@ public class InverseMorphismTest extends TestCase {
 		InverseMorphism im = new InverseMorphism(m);
 		Automaton res = im.transform(a);
 		System.err.println(res);
-		List exp = Arrays.asList(new String[] { "c", "a", "b", "d", "d", "c",
-				"a", "b", "c" });
+		List exp = Arrays.asList("c", "a", "b", "d", "d", "c",
+				"a", "b", "c");
 		assertTrue("Does not accept 'cabddcabc'", res.accept(exp));
-		exp = Arrays.asList(new String[] { "d", "d", "c" });
+		exp = Arrays.asList("d", "d", "c");
 		assertTrue("Does not accept 'ddc'", res.accept(exp));
 	}
 
@@ -72,7 +72,7 @@ public class InverseMorphismTest extends TestCase {
 		InverseMorphism im = new InverseMorphism(m);
 		Automaton res = im.transform(a);
 		System.err.println(res);
-		List exp = Arrays.asList(new String[] { "a", "a", "b", "a", "c", "b","a" });
+		List exp = Arrays.asList("a", "a", "b", "a", "c", "b", "a");
 		assertTrue("Does not accept 'aabacba'", res.accept(exp));
 	}
 
@@ -85,9 +85,9 @@ public class InverseMorphismTest extends TestCase {
 		m.put("c", "a");
 		InverseMorphism im = new InverseMorphism(m);
 		Automaton res = im.transform(a);
-		List exp = Arrays.asList(new String[] { "c", "a", "b", "c", "a", "b" });
+		List exp = Arrays.asList("c", "a", "b", "c", "a", "b");
 		assertTrue("Does not accept 'cabcab'", res.accept(exp));
-		exp = Arrays.asList(new String[] { "a", "b", "c" });
+		exp = Arrays.asList("a", "b", "c");
 		assertTrue("Does accept 'abc'", !res.accept(exp));
 	}
 }

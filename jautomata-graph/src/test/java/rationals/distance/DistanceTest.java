@@ -16,20 +16,15 @@
  */
 package rationals.distance;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
+import fr.lifl.utils.FIDLTestCase;
 import rationals.Automaton;
-import rationals.graph.AutomatonGraphAdapter;
 import rationals.converters.Expression;
+import rationals.graph.AutomatonGraphAdapter;
 import rationals.graph.AutomatonVisualFactory;
 import salvo.jesus.graph.algorithm.DirectedGraphDualMatrix;
-import fr.lifl.utils.FIDLTestCase;
+
+import java.io.IOException;
+import java.util.*;
 
 /**
  * @author nono
@@ -43,6 +38,15 @@ public class DistanceTest extends FIDLTestCase {
 
     private Automaton a;
 
+    /**
+     * Constructor for DistanceTest.
+     *
+     * @param arg0
+     */
+    public DistanceTest(String arg0) {
+        super(arg0);
+    }
+
     /*
      * @see TestCase#setUp()
      */
@@ -54,17 +58,8 @@ public class DistanceTest extends FIDLTestCase {
         this.distance2 = new DistanceL1(b);
        }
 
-    /**
-     * Constructor for DistanceTest.
-     * 
-     * @param arg0
-     */
-    public DistanceTest(String arg0) {
-        super(arg0);
-    }
-
-    public void testVector() throws FileNotFoundException, IOException {
-        List w = Arrays.asList(new Object[] { "a", "b", "a", "b" });
+    public void testVector() throws IOException {
+        List w = Arrays.asList("a", "b", "a", "b");
         int[] vec = distance.vector(w);
         System.err.println(distance.getDfa());
         System.err.println(distance.indices());
@@ -74,29 +69,29 @@ public class DistanceTest extends FIDLTestCase {
     }
 
     public void testVectorNull() {
-        List w = Arrays.asList(new Object[] { "a", "b", "c" });
+        List w = Arrays.asList("a", "b", "c");
         int[] vec = distance.vector(w);
         assertNull(vec);
     }
 
     public void testNormalize() {
-        List w = Arrays.asList(new Object[] { "a", "b", "a", "b" });
+        List w = Arrays.asList("a", "b", "a", "b");
         double[] norm = distance.normalize(w);
 	//        assertEquals(new double[] { 0.5, 0.5, 0.5, 0.5 }, norm);
     }
 
     public void testDistance0() {
-        List w = Arrays.asList(new Object[] { "a", "b", "a", "b" });
-        List w2 = Arrays.asList(new Object[] { "a", "b", "a", "b" });
+        List w = Arrays.asList("a", "b", "a", "b");
+        List w2 = Arrays.asList("a", "b", "a", "b");
         double d = distance.distance(w, w2);
         System.err.println(d);
-        assertEquals((double) 0, (double) d, 0.00000001);
+        assertEquals((double) 0, d, 0.00000001);
     }
 
     public void testDistanceTriangle() {
-        List w = Arrays.asList(new Object[] { "a", "b", "a", "b" });
-        List w2 = Arrays.asList(new Object[] { "a", "c", "a", "b", "a" });
-        List w3 = Arrays.asList(new Object[] { "a", "b", "a", "b", "a" });
+        List w = Arrays.asList("a", "b", "a", "b");
+        List w2 = Arrays.asList("a", "c", "a", "b", "a");
+        List w3 = Arrays.asList("a", "b", "a", "b", "a");
         double d1 = distance.distance(w, w2);
         double d2 = distance.distance(w2, w3);
         double d3 = distance.distance(w, w3);
@@ -173,7 +168,7 @@ public class DistanceTest extends FIDLTestCase {
         
     }
 */
-    public void testDistance2() throws FileNotFoundException, IOException {
+  public void testDistance2() throws IOException {
         System.err.println(distance2.indices());
         List w2 = new ArrayList(Arrays
                 .asList(new Object[] { "a", "c", "c","c"}));

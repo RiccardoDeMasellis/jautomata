@@ -16,26 +16,18 @@
  */
 package rationals.distance;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
-
 import junit.framework.TestCase;
-
 import org.jibble.epsgraphics.EpsGraphics2D;
-
 import rationals.Automaton;
 import rationals.converters.ConverterException;
 import rationals.converters.Expression;
 import rationals.graph.AutomatonVisualFactory;
+
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.*;
+import java.util.List;
 
 /**
  * @author nono
@@ -44,6 +36,15 @@ import rationals.graph.AutomatonVisualFactory;
 public class DistanceMapTest extends TestCase {
 
     private Distance distance;
+
+    /**
+     * Constructor for DistanceMapTest.
+     *
+     * @param arg0
+     */
+    public DistanceMapTest(String arg0) {
+        super(arg0);
+    }
 
     /*
      * @see TestCase#setUp()
@@ -55,16 +56,7 @@ public class DistanceMapTest extends TestCase {
         this.distance = new DistanceL1(b);
     }
 
-    /**
-     * Constructor for DistanceMapTest.
-     * 
-     * @param arg0
-     */
-    public DistanceMapTest(String arg0) {
-        super(arg0);
-    }
-
-    public void test1() throws ConverterException, FileNotFoundException, IOException {
+    public void test1() throws ConverterException, IOException {
         Automaton a = new Expression().fromString("a(b+c)(ab)*");
         AutomatonVisualFactory.epsOutput(a,"fig-sample-dfa-distance.eps",null);
        Distance dist = new DistanceL1(a);

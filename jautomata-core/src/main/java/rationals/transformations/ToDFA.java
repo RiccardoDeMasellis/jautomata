@@ -16,11 +16,7 @@
  */
 package rationals.transformations;
 
-import rationals.Automaton;
-import rationals.Builder;
-import rationals.NoSuchStateException;
-import rationals.State;
-import rationals.Transition;
+import rationals.*;
 
 import java.util.*;
 
@@ -53,12 +49,12 @@ public class ToDFA<L, Tr extends Transition<L>, T extends Builder<L, Tr, T>> imp
 			for (Iterator<Map.Entry<L, Set<State>>> i = tam.entrySet().iterator(); i.hasNext();) {
 				Map.Entry<L, Set<State>> me = i.next();
 				L l = me.getKey();
-				as = (Set<State>) me.getValue();
-				Set<State> asc = TransformationsToolBox.epsilonClosure(as, a);
-				State to = (State) bmap.get(asc);
-				if (to == null) {
-					to = ret.addState(false, TransformationsToolBox
-							.containsATerminalState(asc));
+                as = me.getValue();
+                Set<State> asc = TransformationsToolBox.epsilonClosure(as, a);
+                State to = bmap.get(asc);
+                if (to == null) {
+                    to = ret.addState(false, TransformationsToolBox
+                            .containsATerminalState(asc));
 					bmap.put(asc, to);
 				}
 				todo.add(asc);

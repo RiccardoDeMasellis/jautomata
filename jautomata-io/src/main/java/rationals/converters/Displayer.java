@@ -36,20 +36,20 @@ public interface Displayer {
 	 * 
 	 * @param an Automaton object
 	 */
-	public void setAutomaton(Automaton a) throws ConverterException;
+	void setAutomaton(Automaton a) throws ConverterException;
 
 	/**
 	 * Defines the algorithm to use for layout
 	 * 
 	 * @param an LyaoutAlgorithm object. May not be null.
 	 */
-	public void setAlgorithm(
-		LayoutAlgorithm algo);
+	void setAlgorithm(
+			LayoutAlgorithm algo);
 
 	/**
 	 * Asks the displayer to display the automaton 
 	 * 
 	 */
-	public void display() throws ConverterException;
+	void display() throws ConverterException;
 
 }

@@ -37,5 +37,5 @@ public interface IOAutomataTester {
      * @param spec
      * @throws IOTestFailure
      */
-    public void test(IOStateMachine impl,IOAutomaton spec) throws IOTestFailure;
+    void test(IOStateMachine impl, IOAutomaton spec) throws IOTestFailure;
 }

@@ -73,7 +73,7 @@ public class TransformationsToolBox {
           ns.addAll(exp); /* arrival states */
           Iterator<State> it = ns.iterator();
           while (it.hasNext()) {
-              State st = (State) it.next();
+              State st = it.next();
               Iterator<?> it2 = a.delta(st).iterator();
               while (it2.hasNext()) {
                   Transition<?> tr = (Transition<?>) it2.next();
@@ -111,7 +111,7 @@ public class TransformationsToolBox {
           L l = tr.label();
           if (l == null)
               continue;
-          Set<State> as = (Set<State>) am.get(l);
+          Set<State> as = am.get(l);
           if (as == null) {
               as = a.getStateFactory().stateSet();
               am.put(l, as);

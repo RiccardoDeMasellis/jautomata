@@ -16,12 +16,12 @@
  */
 package rationals;
 
+import junit.framework.TestCase;
+
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import junit.framework.TestCase;
 
 /**
  * @version $Id: AutomatonTest.java 2 2006-08-24 14:41:48Z oqube $
@@ -154,10 +154,10 @@ public class AutomatonTest extends TestCase {
 		t.addTransition(new Transition<>(s2, "b", s3));
 		t.addTransition(new Transition<>(s3, "c", s1));
 		// check accept words
-		List<String> exp = Arrays.asList(new String[] {  "a", "b","c", "a", "b", "c" });
-		assertTrue("Automaton does not accept 'abcabc'",t.accept(exp));
-		exp = Arrays.asList(new String[] {  "a", "b","c", "b", "c" });
-		assertTrue("Automaton does accept 'abcbc'",!t.accept(exp));
+        List<String> exp = Arrays.asList("a", "b", "c", "a", "b", "c");
+        assertTrue("Automaton does not accept 'abcabc'", t.accept(exp));
+        exp = Arrays.asList("a", "b", "c", "b", "c");
+        assertTrue("Automaton does accept 'abcbc'", !t.accept(exp));
     }
 
     public void testAcceptNFA1() throws NoSuchStateException {
@@ -171,9 +171,9 @@ public class AutomatonTest extends TestCase {
 		t.addTransition(new Transition<>(s3, "c", s4));
 		t.addTransition(new Transition<String>(s4, null, s1));
 		// check accept words
-		List<String> exp = Arrays.asList(new String[] {  "a", "b","c", "a", "b", "c" });
-		assertTrue("Automaton does not accept 'abcabc'",t.accept(exp));
-		exp = Arrays.asList(new String[] {  "a", "b","c", "b", "c" });
-		assertTrue("Automaton does accept 'abcbc'",!t.accept(exp));
+        List<String> exp = Arrays.asList("a", "b", "c", "a", "b", "c");
+        assertTrue("Automaton does not accept 'abcabc'", t.accept(exp));
+        exp = Arrays.asList("a", "b", "c", "b", "c");
+        assertTrue("Automaton does accept 'abcbc'", !t.accept(exp));
     }
 }

@@ -21,5 +21,5 @@ import rationals.Builder;
 import rationals.Transition;
 
 public interface UnaryTest<L, Tr extends Transition<L>, T extends Builder<L, Tr, T>> {
-  public boolean test(Automaton<L, Tr, T> a) ;
+  boolean test(Automaton<L, Tr, T> a);
 }

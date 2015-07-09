@@ -16,13 +16,13 @@
  */
 package rationals;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import junit.framework.TestCase;
 import rationals.converters.ConverterException;
 import rationals.converters.Expression;
 import rationals.converters.ToRExpression;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * @version $Id: ToReTest.java 2 2006-08-24 14:41:48Z oqube $
@@ -38,8 +38,8 @@ public class ToReTest extends TestCase {
       Automaton<String, Transition<String>, TransitionBuilder<String>> a = new Expression<Transition<String>, TransitionBuilder<String>>().fromString(re);
       String er = new ToRExpression<Transition<String>, TransitionBuilder<String>>().toString(a);
       a = new Expression<Transition<String>, TransitionBuilder<String>>().fromString(er);
-      assertTrue(a.accept(Arrays.asList(new String[]{"a","b","b","c"})));    
-      assertTrue(!a.accept(Arrays.asList(new String[]{"a","b","b"})));  
+      assertTrue(a.accept(Arrays.asList("a", "b", "b", "c")));
+      assertTrue(!a.accept(Arrays.asList("a", "b", "b")));
     }
     
   public void testRESingleton() throws ConverterException {
@@ -47,7 +47,7 @@ public class ToReTest extends TestCase {
       Automaton<String, Transition<String>, TransitionBuilder<String>> a = new Expression<Transition<String>, TransitionBuilder<String>>().fromString(re);
       String er = new ToRExpression<Transition<String>, TransitionBuilder<String>>().toString(a);
       a = new Expression<Transition<String>, TransitionBuilder<String>>().fromString(er);
-      assertTrue(a.accept(Arrays.asList(new String[]{"a"})));   
+      assertTrue(a.accept(Arrays.asList("a")));
     }
     
   public void testREEpsilon() throws ConverterException {
@@ -55,9 +55,9 @@ public class ToReTest extends TestCase {
     Automaton<String, Transition<String>, TransitionBuilder<String>> a = new Expression<Transition<String>, TransitionBuilder<String>>().fromString(re);
     String er = new ToRExpression<Transition<String>, TransitionBuilder<String>>().toString(a);
     a = new Expression<Transition<String>, TransitionBuilder<String>>().fromString(er);
-    assertTrue(a.accept(new ArrayList<String>()));    
-    assertTrue(a.accept(Arrays.asList(new String[]{"a","b","b","c"})));    
-    assertTrue(!a.accept(Arrays.asList(new String[]{"a","b","b"})));  
+      assertTrue(a.accept(new ArrayList<String>()));
+      assertTrue(a.accept(Arrays.asList("a", "b", "b", "c")));
+      assertTrue(!a.accept(Arrays.asList("a", "b", "b")));
   }
   
   

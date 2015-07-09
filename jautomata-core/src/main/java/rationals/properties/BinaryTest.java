@@ -34,7 +34,7 @@ public interface BinaryTest<L, Tr extends Transition<L>, T extends Builder<L, Tr
    * @param b
    * @return
    */
-  public boolean test(Automaton<L, Tr, T> a, Automaton<L, Tr, T> b);
+  boolean test(Automaton<L, Tr, T> a, Automaton<L, Tr, T> b);
   
 }
 

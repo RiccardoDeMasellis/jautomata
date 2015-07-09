@@ -54,25 +54,18 @@ import java.util.Set;
  */
 public class SynchIOAutomatonSMAdapter implements IOStateMachine, Runnable {
 
+	private final Barrier barrier = new Barrier(2);
 	/* the automaton which is run */
 	private IOAutomaton<IOTransition,IOTransitionBuilder> auto;
-
 	/* the synchronization test */
 	private IOSynchronization synch = new IOSynchronization();
-
 	/* current state of automaton */
 	private Set<State> state;
-
 	/* error status */
 	private boolean error;
-
 	/* stop flag */
 	private boolean stop;
-
 	private Random rand = new Random();
-
-	private final Barrier barrier = new Barrier(2);
-
 	private Object in;
 
 	private Object out;
@@ -127,7 +120,7 @@ public class SynchIOAutomatonSMAdapter implements IOStateMachine, Runnable {
 	private boolean doInput(Object o) {
 		boolean ok = false;
 		for (Transition tr : auto.delta(state)) {
-			IOTransition.IOLetter lt = (IOLetter) ((IOTransition) tr).label();
+			IOTransition.IOLetter lt = (IOLetter) tr.label();
 			if (IOSynchronization.inputMatchesLetter(o, lt)) {
 				doTransition(tr.label());
 				ok = true;
@@ -158,9 +151,13 @@ public class SynchIOAutomatonSMAdapter implements IOStateMachine, Runnable {
 		return inputEnabled;
 	}
 
+	public void setInputEnabled(boolean inputEnabled) {
+		this.inputEnabled = inputEnabled;
+	}
+
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see rationals.ioautomata.IOStateMachine#output()
 	 */
 	public Object output() {
@@ -179,7 +176,7 @@ public class SynchIOAutomatonSMAdapter implements IOStateMachine, Runnable {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see rationals.ioautomata.IOStateMachine#output(java.lang.Object[], int,
 	 * int)
 	 */
@@ -195,7 +192,7 @@ public class SynchIOAutomatonSMAdapter implements IOStateMachine, Runnable {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see rationals.ioautomata.IOStateMachine#availableOutput()
 	 */
 	public int availableOutput() {
@@ -204,7 +201,7 @@ public class SynchIOAutomatonSMAdapter implements IOStateMachine, Runnable {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Runnable#run()
 	 */
 	public void run() {
@@ -253,7 +250,7 @@ public class SynchIOAutomatonSMAdapter implements IOStateMachine, Runnable {
 
 	/**
 	 * Remove all input transitions from this set of transitions
-	 * 
+	 *
 	 * @param trs
 	 */
 	private void selectOutputs(Set trs) {
@@ -264,10 +261,6 @@ public class SynchIOAutomatonSMAdapter implements IOStateMachine, Runnable {
 
 	public boolean isError() {
 		return error;
-	}
-
-	public void setInputEnabled(boolean inputEnabled) {
-		this.inputEnabled = inputEnabled;
 	}
 
 	public long getTimeout() {
